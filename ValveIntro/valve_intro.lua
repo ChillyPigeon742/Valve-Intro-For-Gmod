@@ -36,27 +36,29 @@ local function PlayValveIntro()
     end)
 end
 
-local lastFrameTime = SysTime()
-local frozenThreshold = 0.1
-local isFrozen = true
-local unfreezeCount = 0
+do
+    local lastFrame = SysTime()
+    local freezeThreshold = 0.1
+    local wasFrozen = true
+    local unfrozenCount = 0
 
-hook.Add("Think", "DetectGModFrozenState", function()
-    local now = SysTime()
-    local delta = now - lastFrameTime
+    hook.Add("Think", "ValveIntro_FreezeCheck", function()
+        local now = SysTime()
+        local delta = now - lastFrame
 
-    if delta > frozenThreshold then
-        isFrozen = true
-    else
-        if isFrozen then
-            unfreezeCount = unfreezeCount + 1
-
-            if unfreezeCount == 2 then
-                PlayValveIntro()
+        if delta > freezeThreshold then
+            wasFrozen = true
+        else
+            if wasFrozen then
+                unfrozenCount = unfrozenCount + 1
+                if unfrozenCount == 2 then
+                    PlayValveIntro()
+                    hook.Remove("Think", "ValveIntro_FreezeCheck")
+                end
             end
+            wasFrozen = false
         end
-        isFrozen = false
-    end
 
-    lastFrameTime = now
-end)
+        lastFrame = now
+    end)
+end
