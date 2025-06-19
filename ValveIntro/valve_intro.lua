@@ -50,7 +50,6 @@ hook.Add("Think", "DetectGModFrozenState", function()
     else
         if isFrozen then
             unfreezeCount = unfreezeCount + 1
-            print("[ValveIntro] Detected UI unfrozen, count: " .. unfreezeCount)
 
             if unfreezeCount == 2 then
                 PlayValveIntro()
