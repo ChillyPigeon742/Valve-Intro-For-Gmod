@@ -15,16 +15,28 @@ GMod removed native support for the startup video a long time ago, so this mod c
 The mod currently includes the Valve intro from Source 2007 (Orange Box era).
 
 ### What You Need:
-- A copy of Garry's Mod or another Source game that has the intro video.
+- A copy of the Source game that has the intro video.
 - A way to convert `.bik` files to `.webm` (tools like [HandBrake](https://handbrake.fr/) or [FFmpeg](https://ffmpeg.org/) work great).
 
 ### Steps:
-1. Convert your `.bik` video to `.webm` if needed.
-2. Replace the existing `valve.webm` file in the mod folder (alongside `setup.exe` and `valve_intro.lua`).
-3. If the mod is already installed, **uninstall** it first, then reinstall to load the new video.
+1. **Locate the `.bik` file:**
+   - Navigate to your Source game’s media folder (e.g., `C:\Program Files (x86)\Steam\steamapps\common\Portal 2\portal2\media` or similar).
+   - Look for the startup video file, typically named something like `valve.bik` or `intro.bik`.
+   - Copy this file to your mod folder.
+
+2. **Convert `.bik` to `.webm` (if needed):**
+   - Use a video converter like [HandBrake](https://handbrake.fr/) or [FFmpeg](https://ffmpeg.org/) to convert the `.bik` file to `.webm`.
+   - Example FFmpeg command:  
+     ```bash
+     ffmpeg -i valve.bik -c:v libvpx -crf 10 -b:v 1M -c:a libvorbis valve.webm
+     ```
+
+3. **Replace the existing video:**
+   - Put your new `valve.webm` file in the mod folder (next to `setup.exe` and `valve_intro.lua`), replacing the old one.
+
+4. **Reinstall the mod:**
+   - If the mod is already installed, uninstall it first, then reinstall to apply the new video.
 
 ---
 
-## Troubleshooting & Support
-
-If you run into any issues or have ideas, feel free to open an issue in the repo’s Issues tab!
+Any issues or questions? Hit me up in the Issues tab!
