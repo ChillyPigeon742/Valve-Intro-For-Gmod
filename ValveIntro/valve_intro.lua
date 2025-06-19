@@ -1,4 +1,6 @@
 local function PlayValveIntro()
+    RunConsoleCommand("cl_software_cursor", 1)
+
     local panel = vgui.Create("DHTML")
     panel:SetSize(ScrW(), ScrH())
     panel:SetPos(0, 0)
@@ -9,8 +11,8 @@ local function PlayValveIntro()
 
     panel:SetHTML([[
         <html>
-            <body style="margin:0;overflow:hidden;background:black">
-                <video id="valveVid" autoplay width="100%" height="100%" style="display:block">
+            <body style="margin:0; overflow:hidden; background:black;">
+                <video id="valveVid" autoplay width="100%" height="100%" style="display:block;">
                     <source src="asset://garrysmod/html/valve.webm" type="video/webm">
                 </video>
                 <script>
@@ -30,6 +32,7 @@ local function PlayValveIntro()
             panel:AlphaTo(0, 1, 0, function()
                 if IsValid(panel) then
                     panel:Remove()
+                    RunConsoleCommand("cl_software_cursor", 0)
                 end
             end)
         end
