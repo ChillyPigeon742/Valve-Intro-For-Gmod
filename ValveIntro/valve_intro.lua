@@ -10,14 +10,22 @@ local function PlayValveIntro()
     panel:SetHTML([[
         <html>
             <body style="margin:0;overflow:hidden;background:black">
-                <video autoplay onended="document.location='about:blank'" width="100%" height="100%">
+                <video id="valveVid" autoplay width="100%" height="100%" style="display:block">
                     <source src="asset://garrysmod/html/valve.webm" type="video/webm">
                 </video>
+                <script>
+                    const vid = document.getElementById("valveVid");
+                    vid.onended = function() {
+                        if (typeof gmod !== "undefined" && gmod.VALVE_INTRO_DONE) {
+                            gmod.VALVE_INTRO_DONE();
+                        }
+                    };
+                </script>
             </body>
         </html>
     ]])
 
-    timer.Simple(13.2, function()
+    panel:AddFunction("gmod", "VALVE_INTRO_DONE", function()
         if IsValid(panel) then
             panel:AlphaTo(0, 1, 0, function()
                 if IsValid(panel) then
