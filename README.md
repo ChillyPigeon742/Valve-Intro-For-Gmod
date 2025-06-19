@@ -6,7 +6,7 @@ A fun little project I made out of boredom to bring back the classic Valve start
 
 ## About
 
-GMod removed native support for the startup video a long time ago, so this mod can't bring it back *natively*. Instead, it uses pure Lua to play the intro video as early as possible—no DLL injections or hacks, just clean code.
+GMod removed native support for the startup video a long time ago, so this mod can't bring it back *natively*. Instead, it uses pure Lua to play the intro video as early as possible, with no DLL injections.
 
 ---
 
@@ -36,7 +36,3 @@ The mod currently includes the Valve intro from Source 2007 (Orange Box era), bu
 
 4. **Reinstall the mod:**
    - If the mod is already installed, uninstall it first, then reinstall to apply the new video.
-
----
-
-Any issues or questions? Hit me up in the Issues tab!
