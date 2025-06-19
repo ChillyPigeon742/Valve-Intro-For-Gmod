@@ -1,6 +1,6 @@
 # Valve Intro for Garry's Mod
 
-A fun little project I made out of boredom to bring back the classic Valve startup video in Garry's Mod.
+A fun little project I made out of boredom to bring back the classic Valve startup video in Garry's Mod.   
 NOTE: you have to use the 64-bit branch of GMod this is due to the branch's ability to run javascript and video in HTML panels 
 ---
 
