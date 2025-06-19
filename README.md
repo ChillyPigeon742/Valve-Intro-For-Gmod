@@ -12,7 +12,7 @@ GMod removed native support for the startup video a long time ago, so this mod c
 
 ## How to Change the Video
 
-The mod currently includes the Valve intro from Source 2007 (Orange Box era).
+The mod currently includes the Valve intro from Source 2007 (Orange Box era), but if you would like to change it please follow the steps below
 
 ### What You Need:
 - A copy of the Source game that has the intro video.
