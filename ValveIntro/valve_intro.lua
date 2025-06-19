@@ -36,29 +36,12 @@ local function PlayValveIntro()
     end)
 end
 
-do
-    local lastFrame = SysTime()
-    local freezeThreshold = 0.1
-    local wasFrozen = true
-    local unfrozenCount = 0
+local playedIntro = false
 
-    hook.Add("Think", "ValveIntro_FreezeCheck", function()
-        local now = SysTime()
-        local delta = now - lastFrame
-
-        if delta > freezeThreshold then
-            wasFrozen = true
-        else
-            if wasFrozen then
-                unfrozenCount = unfrozenCount + 1
-                if unfrozenCount == 2 then
-                    PlayValveIntro()
-                    hook.Remove("Think", "ValveIntro_FreezeCheck")
-                end
-            end
-            wasFrozen = false
-        end
-
-        lastFrame = now
-    end)
-end
+hook.Add("Think", "ValveIntro_MainMenuCheck", function()
+    if gui.IsGameUIVisible() and not playedIntro then
+        PlayValveIntro()
+        playedIntro = true
+        hook.Remove("Think", "ValveIntro_MainMenuCheck")
+    end
+end)
