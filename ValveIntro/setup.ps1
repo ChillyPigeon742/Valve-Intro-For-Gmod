@@ -110,6 +110,13 @@ switch ($choice) {
             Copy-Item -Path $localLua -Destination $destLuaPath -Force
             Write-Host "[INFO] Copied valve_intro.lua to lua/menu/"
 
+            # Check if 'media' folder exists, if not, create it
+            $mediaFolder = Join-Path $gmodPath "garrysmod\media"
+            if (-not (Test-Path $mediaFolder)) {
+                Write-Host "[INFO] 'media' folder not found, creating it..."
+                New-Item -Path $mediaFolder -ItemType Directory -Force
+            }
+
             Copy-Item -Path $localWebm -Destination $destWebmPath -Force
             Write-Host "[INFO] Copied valve.webm to media/"
 
