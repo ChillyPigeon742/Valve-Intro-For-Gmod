@@ -3,23 +3,41 @@ Write-Host "    Valve Intro Setup Tool"
 Write-Host "==============================="
 Write-Host ""
 
-try {
-    $gmodPath = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 4000" -ErrorAction Stop).InstallLocation
-} catch {
-    try {
-        $gmodPath = (Get-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 4000" -ErrorAction Stop).InstallLocation
-    } catch {
-        Write-Host "[ERROR] Could not find GMod install path in registry (64-bit and 32-bit keys)." -ForegroundColor Red
+function Get-GModPath {
+    $steamPath = ""
+
+    if (-not $steamPath) {
+        Write-Host "[ERROR] Steam installation path not found." -ForegroundColor Red
         Pause
         exit
     }
-}
 
-if (-not $gmodPath) {
-    Write-Host "[ERROR] GMod install path is empty." -ForegroundColor Red
+    $gmodPath = Join-Path $steamPath "steamapps\common\GarrysMod"
+
+    if (Test-Path $gmodPath) {
+        return $gmodPath
+    }
+
+    $libraryFoldersFile = Join-Path $steamPath "steamapps\libraryfolders.vdf"
+    if (Test-Path $libraryFoldersFile) {
+        $libraryFolders = Get-Content $libraryFoldersFile | Select-String -Pattern '^\s*"(\d+)"\s+"(.*)"' | ForEach-Object {
+            $_.Matches.Groups[2].Value
+        }
+
+        foreach ($libraryFolder in $libraryFolders) {
+            $gmodPath = Join-Path $libraryFolder "steamapps\common\GarrysMod"
+            if (Test-Path $gmodPath) {
+                return $gmodPath
+            }
+        }
+    }
+
+    Write-Host "[ERROR] GMod installation path not found." -ForegroundColor Red
     Pause
     exit
 }
+
+$gmodPath = Get-GModPath
 
 Write-Host "[SUCCESS] GMod path found: $gmodPath"
 
