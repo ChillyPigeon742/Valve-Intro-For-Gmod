@@ -4,10 +4,8 @@ Write-Host "==============================="
 Write-Host ""
 
 function Get-GModPath {
-    # Check if Steam is installed by querying the registry
     $steamPath = ""
 
-    # Attempt to get Steam install path from both possible registry locations
     $steamPath = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Valve\Steam" -Name InstallPath -ErrorAction SilentlyContinue).InstallPath
     if (-not $steamPath) {
         $steamPath = (Get-ItemProperty -Path "HKLM:\SOFTWARE\WOW6432Node\Valve\Steam" -Name InstallPath -ErrorAction SilentlyContinue).InstallPath
@@ -19,13 +17,11 @@ function Get-GModPath {
         exit
     }
 
-    # Try to locate GMod inside the Steam directory
     $gmodPath = Join-Path $steamPath "steamapps\common\GarrysMod"
     if (Test-Path $gmodPath) {
         return $gmodPath
     }
 
-    # If GMod is not found, check for alternate Steam library folders in libraryfolders.vdf
     $libraryFoldersFile = Join-Path $steamPath "steamapps\libraryfolders.vdf"
     if (Test-Path $libraryFoldersFile) {
         $libraryFolders = Get-Content $libraryFoldersFile | Select-String -Pattern '^\s*"(\d+)"\s+"(.*)"' | ForEach-Object {
